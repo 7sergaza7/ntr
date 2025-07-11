@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-api
+  namespace: nodejs-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-api
+  template:
+    metadata:
+      labels:
+        app: nodejs-api
+    spec:
+      containers:
+        - name: nodejs-api
+          image: nmatsui/hello-world-api:latest #node:20-alpine # Replace with your app image
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "50m"
+            limits:
+              memory: "500Mi"
+              cpu: "200m"
