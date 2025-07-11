@@ -29,11 +29,11 @@ Provide a brief overview of the project, its objectives, and expected outcomes.
 
 ### 2.1 Deployment fixed
 
-Please check [`2.1_fixed`](https://github.com/7sergaza7/ntr/2.1/2.1_fixed.yaml)
+Please check [`2.1_fixed`](https://github.com/7sergaza7/ntr/blob/main/2.1/2.1_fixed.yaml)
 
 ### 2.2 REsource Management
 
-Please check [`2.2 folder`](https://github.com/7sergaza7/ntr/2.2) with the manifests created for simple node api found on docker hub.
+Please check [`2.2 folder`](https://github.com/7sergaza7/ntr/blob/main/2.2) with the manifests created for simple node api found on docker hub.
 
 ---
 
@@ -49,7 +49,7 @@ The 3rd job is download dist folder and deployment to kubernetes cluster k8s fol
 The optimization is to run jobs on pull request only - build (and upload), test, lint in parallel without any dependency in between.
 The deployment job triggered on push to main branch. Extra path trigger might be applied to trigger this specific application workflow.
 
-See the fixed simple node.js app workflow [`_cicd_nodeapp`](https://github.com/7sergaza7/ntr/3.1/_cicd_nodeapp.yaml)
+See the fixed simple node.js app workflow [`_cicd_nodeapp`](https://github.com/7sergaza7/ntr/blob/main/3.1/_cicd_nodeapp.yaml)
 
 The things worth to implement:
 
