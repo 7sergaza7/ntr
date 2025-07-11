@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secure
+spec:
+  securityContext:
+    runAsUser: 101
+    runAsGroup: 101
+    fsGroup: 101
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop: ["ALL"]
+      volumeMounts:
+        - name: nginx-cache
+          mountPath: /var/cache/nginx
+        - name: run-dir
+          mountPath: /run
+  volumes:
+    - name: nginx-cache
+      emptyDir: {}
+    - name: run-dir
+      emptyDir: {}
+  restartPolicy: Always

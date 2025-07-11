@@ -67,11 +67,14 @@ Argo CD with Canary and Blue/Green
 
 ### 4.1 Security Audit
 
-- RBAC:
-Developers has a full privilege as admins
+- ClusterRoleBinding issue:
+Developers have the same access level as cluster admin role which is bad. Need to define restricted cluster role for developers group
+Example with developers defined ClusterRole and ClusterRoleBinding for developers group [`pod`](https://github.com/7sergaza7/ntr/blob/main/4.1/developers_clusterrole.yaml)
 
-- Pod:
-Running as root which is bad and highly unsecured
+- Pod security issue:
+Running application with root privilege which is not secured. Need to define access for application users.
+
+See the secured nginx configuration example that using nginx user [`pod`](https://github.com/7sergaza7/ntr/blob/main/4.1/pod.yaml)
 
 ### 4.2 Secret Management
 
