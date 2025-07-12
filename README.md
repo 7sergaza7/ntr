@@ -82,7 +82,7 @@ The GitHub Actions workflow [`deploy-rollout`](https://github.com/7sergaza7/ntr/
 
 The [`app`](https://github.com/7sergaza7/ntr/blob/main/3.2/app) folder contains the NGINX manifest files.
 
-The Argo Rollouts manifests are located in the [`argo-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/argo-rollout) folder.
+The Argo Rollouts manifests are located in the [`argo-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/argo-rollouts) folder.
 
 See the screenshot [`rollouts.png`](https://github.com/7sergaza7/ntr/blob/main/3.2/rollouts.png).
 
