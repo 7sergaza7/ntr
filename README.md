@@ -74,27 +74,31 @@ The things worth to implement:
 
 ### 3.2 Deployment strategy
 
-Argo CD with Canary and Blue/Green
+Let's assume we have installed the Argo Rollouts Kubernetes plugin for this purpose. The goal is to deploy a simple NGINX application in a single production environment. Multi-environment setups can also be designed using Kustomize and folder layouts.
+
+The common Kubernetes deployment strategies are Blue-Green and Canary.
+
+The GitHub Actions workflow [`deploy-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/deploy-rollout.yaml) demonstrates the deployment strategy for the NGINX application.
+
+The [`app`](https://github.com/7sergaza7/ntr/blob/main/3.2/app) folder contains the NGINX manifest files.
+
+The Argo Rollouts manifests are located in the [`argo-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/argo-rollout) folder.
+
+See the screenshot [`rollout.png`](https://github.com/7sergaza7/ntr/blob/main/3.2/rollout.png).
+
+#### CLI
 
 ```bash
-serg@DESKTOP-ICPB06S:~$ kubectl-argo-rollout list rollouts -n nodejs-api
+serg@DSKTP:~$ kubectl-argo-rollout list rollouts -n nodejs-api
 NAME               STRATEGY   STATUS        STEP  SET-WEIGHT  READY  DESIRED  UP-TO-DATE  AVAILABLE
 nodeapi-bluegreen  BlueGreen  Healthy       -     -           3/3    3        3           3        
 nodeapi-canary     Canary     Healthy       6/6   100         3/3    3        3           3 
-```
 
-To undo the latest rollout run the following command:
+#Manual undo for bluegreen
+kubectl-argo-rollout undo nodeapi-bluegreen -n nodejs-api
 
-```bash
-kubectl argo rollouts undo <rollout-name>
-```
-
-List all rollouts and their history:
-
-```bash
-kubectl argo rollouts list 
-
-kubectl argo rollouts history <rollout-name>
+# history
+kubectl-argo-rollout history <rollout-name> -n nodejs-api
 ```
 
 ---
