@@ -10,6 +10,30 @@ Solution [rds_postgres_backup](https://github.com/7sergaza7/ntr/blob/main/1.1/rd
 
 ### 1.2 ALB issue
 
+According to the description potential issue:
+
+1. 8080 Port might be wrong in configuration. According to log we see port 80 on 10.0.1.5:80
+1. Health check path /health might be wrong at the endpoint.
+1. application itself might be unhealthy
+1. Check firewall and security groups rules on ec2.
+
+AWS Console UI and aws cli might help here to query with different parameters like --region etc:
+
+Need to check all parameters related to connectivity and health.
+Reference [elbv2](https://docs.aws.amazon.com/cli/latest/reference/elbv2/)
+
+```bash
+aws elbv2 describe-target-groups 
+
+aws elbv2 describe-target-health --target-group-arn
+
+aws elbv2 describe-load-balancers
+
+aws ec2 describe-security-groups --group-ids
+
+aws ec2 describe-instances --instance-ids
+```
+
 ### 1.3 S3 Bucked config
 
 Solution [s3_static_site](https://github.com/7sergaza7/ntr/blob/main/1.1/rds_postgres_backup.tf)
