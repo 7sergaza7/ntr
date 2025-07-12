@@ -1,17 +1,3 @@
-# Terraform Configuration for AWS RDS PostgreSQL with an Advanced Backup Strategy
-#
-# This configuration provisions:
-# 1. An RDS PostgreSQL database instance.
-# 2. An AWS Backup Vault in the primary region.
-# 3. An AWS Backup Vault in a secondary (DR) region.
-# 4. An IAM Role for AWS Backup service.
-# 5. A comprehensive AWS Backup Plan that:
-#    - Enables point-in-time recovery for the last 30 days via RDS automated backups.
-#    - Creates weekly full backups that are retained for one year (365 days).
-#    - Copies these weekly backups to a different AWS region for disaster recovery.
-# 6. An AWS Backup Selection to apply the plan to the RDS instance.
-
-
 provider "aws" {
   region = "us-east-1"
 }
@@ -107,7 +93,6 @@ resource "aws_backup_plan" "rds_backup_plan" {
       delete_after = 365
     }
 
-    # cross-region copy for dr
     copy_action {
       destination_vault_arn = aws_backup_vault.dr_vault.arn
       lifecycle {
@@ -121,7 +106,7 @@ resource "aws_backup_plan" "rds_backup_plan" {
   }
 }
 
-# 
+# get rds instance arn
 resource "aws_backup_selection" "rds_selection" {
   iam_role_arn = aws_iam_role.backup_role.arn
   name         = "rds-postgres-selection"
@@ -147,4 +132,4 @@ output "dr_backup_vault_name" {
   description = "The name of the disaster recovery AWS Backup vault."
   value       = aws_backup_vault.dr_vault.name
 }
-# --- End of Configuration ---
+
