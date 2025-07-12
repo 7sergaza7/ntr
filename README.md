@@ -1,6 +1,6 @@
 # Introduction
 
-Solution description for each section
+Solution description for DevOps assessment.
 
 ## 1 - AWS and Cloud Architecture
 
