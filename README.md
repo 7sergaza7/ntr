@@ -38,7 +38,7 @@ aws ec2 describe-instances --instance-ids
 
 ### 1.3 S3 Bucked config
 
-Solution [s3_static_site](https://github.com/7sergaza7/ntr/blob/main/1.1/rds_postgres_backup.tf)
+Solution [s3_static_site 1.3 folder](https://github.com/7sergaza7/ntr/blob/main/1.3)
 
 ---
 
