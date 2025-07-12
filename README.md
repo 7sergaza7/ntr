@@ -140,4 +140,4 @@ See [rbac](https://github.com/7sergaza7/ntr/blob/main/4.2/rbac.yaml) example con
 
 ### Bonus Task
 
-It is feasible, but my priority was to complete all four assignment sections first.
+It is feasible, but my priority was to complete all four assignment sections first during the given time.
