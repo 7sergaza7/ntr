@@ -93,6 +93,24 @@ See the secured nginx configuration example that using nginx user [`pod`](https:
 
 ### 4.2 Secret Management
 
+Let's assume we design AWS solution and not multi-cloud architecture.
+
+Using AWS native services need the following:
+
+- AWS Secrets Manager: A secure and scalable service for storing and managing secrets such as API keys, database credentials, and other sensitive information.
+- Access Management (IAM):
+- EKS installed with the following components:
+  - AWS Identity - EKS Pod Identity (better and easier then IRSA), which provides a secure way to grant Kubernetes pods access to AWS resources without needing to manage credentials manually.
+  - Kubernetes Secrets Store CSI Driver (helm chart): This driver allows you to mount secrets from external stores, like AWS Secrets Manager, as volumes inside your pods. This avoids exposing secrets as environment variables.
+  - AWS Secrets & Configuration Provider (ASCP): A plugin for the Secrets Store CSI Driver that enables it to communicate with AWS Secrets Manager.
+  - Kubernetes RBAC (Role-Based Access Control): To enforce fine-grained access control to Kubernetes resources, including the secrets synchronized into the cluster.
+  - Reloader (helm chart): A Kubernetes controller that watches for changes in ConfigMaps and Secrets and triggers rolling upgrades on associated Deployments, StatefulSets, and DaemonSets. This is crucial for automated secret rotation.
+- Kubernetes Audit Logs & AWS CloudTrail: For comprehensive auditing of secret access and management activities.
+
+See [deployment](https://github.com/7sergaza7/ntr/blob/main/4.2/deployment.yaml) example with annotation to reloader from [secret-provider-class](https://github.com/7sergaza7/ntr/blob/main/4.2/secret-provider-class.yaml).
+
+See [rbac](https://github.com/7sergaza7/ntr/blob/main/4.2/rbac.yaml) example configuration for `my-app-sa` assigned to role `secret-reader`
+
 ---
 
 ### Bonus Task

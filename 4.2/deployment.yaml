@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-microservice
+  namespace: my-app-namespace
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-microservice
+  template:
+    metadata:
+      labels:
+        app: my-microservice
+    spec:
+      serviceAccountName: my-app-sa
+      containers:
+        - name: my-app-containers
+          image: your-app-image:latest
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "my-app-secrets"
