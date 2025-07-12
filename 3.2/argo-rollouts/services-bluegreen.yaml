@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapi-active
+  namespace: nodejs-api
+spec:
+  selector:
+    app: nodeapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapi-preview
+  namespace: nodejs-api
+spec:
+  selector:
+    app: nodeapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

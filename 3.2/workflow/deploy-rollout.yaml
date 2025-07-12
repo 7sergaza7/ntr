@@ -1,0 +1,65 @@
+name: Deploy Node API with Argo Rollouts
+
+on:
+  workflow_dispatch:
+    inputs:
+      strategy:
+        description: "Deployment strategy (blue-green or canary)"
+        required: true
+        default: "blue-green"
+        type: choice
+        options:
+          - bluegreen
+          - canary
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set rollout manifest
+        id: set_manifest
+        run: |
+          if [ "${{ github.event.inputs.strategy }}" = "canary" ]; then
+            echo "MANIFEST=3.4/rollout-canary.yaml" >> $GITHUB_ENV
+          else
+            echo "MANIFEST=3.4/rollout-bluegreen.yaml" >> $GITHUB_ENV
+          fi
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: "latest"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name $CLUSTER_NAME
+
+      - name: Install Argo Rollouts CLI
+        run: |
+          curl -sLO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-linux-amd64
+          chmod +x kubectl-argo-rollouts-linux-amd64
+          sudo mv kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
+
+      - name: Apply rollout manifest
+        run: |
+          kubectl apply -f ${{ env.MANIFEST }}
+
+      - name: Manual promotion (for blue-green)
+        run: |
+          kubectl-argo-rollouts promote nodeapi-${{ github.event.inputs.strategy }} -n nodejs-api
+
+      - name: Status
+        run: |
+          kubectl-argo-rollouts get rollout nodeapi-${{ github.event.inputs.strategy }} -n nodejs-api

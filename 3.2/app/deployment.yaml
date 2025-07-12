@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nodejs-api
+  labels:
+    name: nodejs-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapi
+  namespace: nodejs-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nodeapi
+  template:
+    metadata:
+      labels:
+        app: nodeapi
+    spec:
+      containers:
+        - name: nodeapi
+          image: nginx:1.21 #your-repo/nodeapi:v1.0.0 # Replace with your image
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: nodeapi-bluegreen
+  namespace: nodejs-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nodeapi
+  template:
+    metadata:
+      labels:
+        app: nodeapi
+    spec:
+      containers:
+        - name: nodeapi
+          image: nginx:1.28 # Replace with your image
+          ports:
+            - containerPort: 3000
+  strategy:
+    blueGreen:
+      activeService: nodeapi-active
+      previewService: nodeapi-preview
+      autoPromotionEnabled: false # Manual promotion for rollback
