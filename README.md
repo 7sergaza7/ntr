@@ -78,13 +78,13 @@ Let's assume we have installed the Argo Rollouts Kubernetes plugin for this purp
 
 The common Kubernetes deployment strategies are Blue-Green and Canary.
 
-The GitHub Actions workflow [`deploy-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/deploy-rollout.yaml) demonstrates the deployment strategy for the NGINX application.
+The GitHub Actions workflow [`deploy-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/workflow/deploy-rollout.yaml) demonstrates the deployment strategy for the NGINX application.
 
 The [`app`](https://github.com/7sergaza7/ntr/blob/main/3.2/app) folder contains the NGINX manifest files.
 
 The Argo Rollouts manifests are located in the [`argo-rollout`](https://github.com/7sergaza7/ntr/blob/main/3.2/argo-rollout) folder.
 
-See the screenshot [`rollout.png`](https://github.com/7sergaza7/ntr/blob/main/3.2/rollout.png).
+See the screenshot [`rollouts.png`](https://github.com/7sergaza7/ntr/blob/main/3.2/rollouts.png).
 
 #### CLI
 
