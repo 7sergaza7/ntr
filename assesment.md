@@ -1,27 +1,18 @@
 # Introduction
 
-Provide a brief overview of the project, its objectives, and expected outcomes.
-
----
-
-<!-- # Task Assignment
-
-| Task                | Owner        | Deadline    | Status     |
-|---------------------|--------------|-------------|------------|
-| Requirement Gathering | [Name]     | [Date]      | [Status]   |
-| UI/UX Design        | [Name]       | [Date]      | [Status]   |
-| Development         | [Name]       | [Date]      | [Status]   |
-| Testing             | [Name]       | [Date]      | [Status]   |
-
---- -->
+Solution description for each section
 
 ## 1 - AWS and Cloud Architecture
 
-### 1.1 RDS DB terraform code
+### 1.1 RDS DB backup terraform code
+
+Solution [rds_postgres_backup](https://github.com/7sergaza7/ntr/blob/main/1.1/rds_postgres_backup.tf)
 
 ### 1.2 ALB issue
 
 ### 1.3 S3 Bucked config
+
+Solution [s3_static_site](https://github.com/7sergaza7/ntr/blob/main/1.1/rds_postgres_backup.tf)
 
 ---
 
